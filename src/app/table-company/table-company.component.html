@@ -1,0 +1,23 @@
+<h2 class="container-company__title">Companies</h2>
+<button (click)="$event.preventDefault()" routerLink="/companies/add" class="waves-effect waves-light btn">Add</button>
+<table class="table">
+  <thead class="thead-inverse">
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <th>Mail</th>
+    <th>Phone</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+      <tbody
+        *ngFor="let u of (companies$ | async) | paginate: {itemsPerPage: 5, currentPage:p}"
+        [company] = "u"
+      >
+      </tbody>
+  <tr *ngIf="(companies$ | async)?.length === 0">
+    <td colspan="6" class="noCompanies">No companies</td>
+  </tr>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
