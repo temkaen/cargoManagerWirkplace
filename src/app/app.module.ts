@@ -11,7 +11,6 @@ import {CompanyService} from './company.service';
 import {ErrorService} from './error.service';
 import { FormCompanyComponent } from './form-company/form-company.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { JwPaginationComponent } from 'jw-angular-pagination';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 const  routes = [
@@ -23,12 +22,10 @@ const  routes = [
 
 @NgModule({
   declarations: [
-
     AppComponent,
     TableCompanyComponent,
     ItemCompanyComponent,
     FormCompanyComponent,
-    JwPaginationComponent
   ],
   imports: [
     BrowserModule,

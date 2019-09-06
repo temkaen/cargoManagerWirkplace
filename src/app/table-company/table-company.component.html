@@ -1,21 +1,13 @@
 <h2 class="container-company__title">Companies</h2>
 <div>
   <button (click)="$event.preventDefault()" routerLink="/companies/add" class="waves-effect waves-light btn">Add</button>
-
-    <!-- Form starts -->
-    <form [formGroup]="itemsPagination" (ngSubmit)="onSubmit()">
-
-      <select class="custom-select" (change)="changeItemsPerPage($e)" formControlName="itemsSelect">
+    <form *ngIf="(companies$ | async)?.length > 5" [formGroup]="itemsPagination">
+      <select class="custom-select" (change)="changeItemsPerPage()" formControlName="itemsSelect">
         <option value="">Choose items per page</option>
         <option *ngFor="let item of itemsNum" [ngValue]="item">{{item}}</option>
       </select>
-
-
     </form>
-      <!-- Submit Button -->
-
 </div>
-
 <table class="table">
   <thead class="thead-inverse">
   <tr>
@@ -36,7 +28,7 @@
     <td colspan="6" class="noCompanies">No companies</td>
   </tr>
 </table>
-<pagination-controls (pageChange)="p = $event" class="pagination-custom"></pagination-controls>
+<pagination-controls *ngIf="(companies$ | async)?.length > 5" (pageChange)="pageChanged($event)" class="pagination-custom"></pagination-controls>
 
 
 

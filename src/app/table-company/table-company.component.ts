@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CompanyService} from '../company.service';
 import {Company} from './company';
-import {Observable} from 'rxjs';
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
+import {Observable, Subscription} from 'rxjs';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -11,28 +11,21 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './table-company.component.html',
   styleUrls: ['./table-company.component.less']
 })
-export class TableCompanyComponent implements OnInit {
+export class TableCompanyComponent implements OnInit, OnDestroy  {
     public companies$: Observable<Company[]>;
   public p = 1;
   public items = 5;
-  selectPagination: FormGroup;
-  // noinspection JSAnnotator
+  public sub;
   itemsNum: any = [5, 10, 50];
-  isSubmitted = false;
-
-
-
+  private urlParams: Params;
 
   constructor(private companyService: CompanyService, public fb: FormBuilder, private route: ActivatedRoute,
               private router: Router,
-             ) {
-
-  }
+             ) {}
 
   itemsPagination = this.fb.group({
     itemsSelect: ['', [Validators.required]]
   });
-
 
   changeItemsPerPage() {
     const valueSelect = this.itemsPagination.value;
@@ -42,17 +35,25 @@ export class TableCompanyComponent implements OnInit {
   }
 
   setPaginationParams() {
-    const matrixUrl = this.router.parseUrl('/companies');
-    console.log(matrixUrl);
+
+  this.sub = this.route.params.subscribe(params => this.urlParams = params
+   );
+  this.items = this.urlParams.items || this.items;
+  this.p = this.urlParams.p || this.p;
+  console.log(this.itemsPagination.value);
   }
+
   ngOnInit() {
       this.companies$ = this.companyService.getCompanies();
       this.setPaginationParams();
-
-
   }
 
-
-
-
+  pageChanged($event: number) {
+    this.p = $event;
+    this.router.navigate(['/companies', { items: this.items, p: this.p }]);
+    return this.p;
+  }
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }
