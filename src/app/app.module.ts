@@ -18,6 +18,7 @@ const  routes = [
   { path: '', redirectTo: '/companies', pathMatch: 'full' }, /// this route redirected to default page and must be remove later
   {path: 'companies', component:   TableCompanyComponent},
   {path: 'companies/add', component: FormCompanyComponent},
+
 ];
 
 @NgModule({
