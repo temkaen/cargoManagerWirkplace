@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CompanyService} from '../company.service';
 import {Company} from './company';
-import {Observable, Subscription} from 'rxjs';
-import {FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {FormBuilder} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-table-company',
@@ -13,34 +12,34 @@ import { switchMap } from 'rxjs/operators';
 })
 export class TableCompanyComponent implements OnInit, OnDestroy  {
     public companies$: Observable<Company[]>;
-  public p = 1;
-  public items = 5;
-  public sub;
+  public p: number|string = 1;
+  public items: number|string = 5;
   itemsNum: any = [5, 10, 50];
-  private urlParams: Params;
 
   constructor(private companyService: CompanyService, public fb: FormBuilder, private route: ActivatedRoute,
               private router: Router,
              ) {}
 
   itemsPagination = this.fb.group({
-    itemsSelect: ['', [Validators.required]]
+    itemsSelect: ['']
   });
 
   changeItemsPerPage() {
     const valueSelect = this.itemsPagination.value;
-    this.items = valueSelect.itemsSelect || this.items;
 
+    this.items = valueSelect.itemsSelect || this.items;
     this.router.navigate(['/companies', { items: this.items, p: this.p }]);
-  }
+    }
 
   setPaginationParams() {
+    console.log(this.itemsPagination.value);
 
-  this.sub = this.route.params.subscribe(params => this.urlParams = params
-   );
-  this.items = this.urlParams.items || this.items;
-  this.p = this.urlParams.p || this.p;
-  console.log(this.itemsPagination.value);
+  this.items = this.route.snapshot.paramMap.get('items') || this.items;
+  this.p = this.route.snapshot.paramMap.get('p') || this.p;
+
+
+  // this.itemsPagination.setValue({itemsSelect: this.items});
+
   }
 
   ngOnInit() {
@@ -51,9 +50,5 @@ export class TableCompanyComponent implements OnInit, OnDestroy  {
   pageChanged($event: number) {
     this.p = $event;
     this.router.navigate(['/companies', { items: this.items, p: this.p }]);
-    return this.p;
-  }
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }

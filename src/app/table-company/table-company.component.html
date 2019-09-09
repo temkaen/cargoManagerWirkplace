@@ -1,10 +1,10 @@
 <h2 class="container-company__title">Companies</h2>
 <div>
   <button (click)="$event.preventDefault()" routerLink="/companies/add" class="waves-effect waves-light btn">Add</button>
-    <form *ngIf="(companies$ | async)?.length > 5" [formGroup]="itemsPagination">
+    <form *ngIf="(companies$ | async)?.length > 5" [formGroup]="itemsPagination" >
       <select class="custom-select" (change)="changeItemsPerPage()" formControlName="itemsSelect">
-        <option value="">Choose items per page</option>
-        <option *ngFor="let item of itemsNum" [ngValue]="item">{{item}}</option>
+        <option value="" disabled>Choose items per page</option>
+        <option *ngFor="let item of itemsNum" [ngValue] = "item">{{item}}</option>
       </select>
     </form>
 </div>
