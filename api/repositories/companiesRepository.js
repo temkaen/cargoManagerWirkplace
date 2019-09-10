@@ -35,6 +35,27 @@ class CompaniesRepository {
 
     return company;
   }
+
+  async getCompanyById(id) {
+    const companies = await this.getCompanies();
+
+    return companies.find(company => company.id === id);
+  }
+
+  async editCompany(id, dataCompany) {
+    const companies = await this.getCompanies();
+    const companyItem = companies.find(company => company.id === id);
+
+    companyItem.name = dataCompany.name;
+    companyItem.address = dataCompany.address;
+    companyItem.contactPerson = dataCompany.contactPerson;
+    companyItem.email = dataCompany.email;
+    companyItem.phone = dataCompany.phone;
+
+    await writeFilePromise(this.companiesPath, JSON.stringify(companies));
+
+    return companies;
+  }
 }
 
 module.exports = new CompaniesRepository();

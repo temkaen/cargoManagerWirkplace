@@ -23,6 +23,10 @@ export class ErrorService {
           console.log('Error 500 occurred');
         }
           break;
+        case 409: {
+          console.log(err.error.message);
+        }
+          break;
       }
   }
 }

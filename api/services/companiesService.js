@@ -15,18 +15,33 @@ class CompaniesService {
 
     this._checkCompany(companies, dataCompany.name, dataCompany.email);
 
-    const company = await this.companiesRepository.addCompany(dataCompany);
+    return this.companiesRepository.addCompany(dataCompany);
+  }
 
-    return company;
+  async editCompany(id, dataCompany) {
+    const companies = await this.getCompanies();
+
+    const companyItem = await this.companiesRepository.getCompanyById(id);
+
+    const name = (companyItem.name !== dataCompany.name) ? dataCompany.name : undefined;
+    const email = (companyItem.email !== dataCompany.email) ? dataCompany.email : undefined;
+
+    this._checkCompany(companies, name, email);
+
+    return this.companiesRepository.editCompany(id, dataCompany);
   }
 
   _checkCompany(companies, name, email) {
     companies.forEach(company => {
 
-      if (company.name === name || company.email === email) {
-        throw new httpErrors.Conflict('A company with this name or email already exists!');		// Error 409
+      if (company.name === name && company.email === email) {
+        throw new httpErrors.Conflict('A company with this name and email already exists!');		// Error 409
+      } else if(company.name === name) {
+        throw new httpErrors.Conflict('A company with this name already exists!');
+      } else if(company.email === email) {
+        throw new httpErrors.Conflict('A company with this email already exists!');
       }
-  });
+    });
   }
 }
 

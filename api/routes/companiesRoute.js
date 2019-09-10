@@ -15,4 +15,10 @@ router.post(
   companiesController.addCompany
 );
 
+router.put(
+  '/api/company/:id',
+  exspressJoi(companiesSchema),
+  companiesController.editCompany
+);
+
 module.exports = router;

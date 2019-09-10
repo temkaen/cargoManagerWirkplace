@@ -9,7 +9,12 @@ function addCompany(req) {
   return companiesService.addCompany(req.body);
 }
 
+function editCompany(req) {
+  return companiesService.editCompany(req.params.id, req.body);
+}
+
 module.exports = {
   getCompanies: routeUtils.handleResponse(getCompanies),
-  addCompany: routeUtils.handleResponse(addCompany)
+  addCompany: routeUtils.handleResponse(addCompany),
+  editCompany: routeUtils.handleResponse(editCompany)
 };
