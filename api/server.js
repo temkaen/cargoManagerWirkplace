@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const app = express();
 const DEFAULT_PORT = 3000;
 const companiesRoute = require('./routes/companiesRoute.js');
-const paginationRoute = require('./routes/companiesRoute.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -17,9 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  companiesRoute,
-  paginationRoute
-
+  companiesRoute
 );
 
 app.listen(DEFAULT_PORT, () => console.log(`Server has been started (port ${DEFAULT_PORT})...`));

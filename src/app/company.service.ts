@@ -21,6 +21,7 @@ export class CompanyService {
                 ...data.map(company => {
 
                   return {
+
                     id: company.id,
                     name: company.name || '',
                     address: company.address || '',
