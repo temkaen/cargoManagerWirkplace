@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'tbody',
@@ -6,5 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./item-company.component.less']
 })
 export class ItemCompanyComponent  {
-  @Input() company;
+  @Input () company;
+
 }
