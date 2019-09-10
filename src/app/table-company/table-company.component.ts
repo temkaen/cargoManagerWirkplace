@@ -16,7 +16,6 @@ export class TableCompanyComponent implements OnInit {
   public items: number|string = 10;
   itemsNum: string[] = ['10', '20'];
   itemsPagination: FormGroup;
-  public savedPaginationParams: object;
 
 
   constructor(private companyService: CompanyService,  private route: ActivatedRoute,
@@ -34,22 +33,22 @@ export class TableCompanyComponent implements OnInit {
     this.router.navigate(['/companies', { items: this.items, p: this.p }]);
   }
 
-  checkPaginationParams() {
-      this.savedPaginationParams = JSON.parse(localStorage.getItem('parametersPagination')) || false;
-  }
+  // checkPaginationParams() {
+  //     this.savedPaginationParams = JSON.parse(localStorage.getItem('parametersPagination')) || false;
+  // }
 
   setPaginationParams() {
     console.log(this.savedPaginationParams);
-    if (!this.savedPaginationParams){
+    // if (!this.savedPaginationParams){
       this.items = this.route.snapshot.paramMap.get('items') || this.items;
       this.p = this.route.snapshot.paramMap.get('p')  || this.p;
       this.itemsPagination.controls.itemsSelect.setValue(`${this.items}`, {onlySelf: true} );
-    }
+    // }
   }
 
   ngOnInit() {
     this.companies$ = this.companyService.getCompanies();
-    this.checkPaginationParams();
+    // this.checkPaginationParams();
     this.setPaginationParams();
   }
 
