@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'tbody-company',
+  selector: 'tbody',
   templateUrl: './item-company.component.html',
   styleUrls: ['./item-company.component.less']
 })
