@@ -1,0 +1,21 @@
+<h2 class="container-user__title">List of users</h2>
+<!-- <a routerLink="/users/add" class="waves-effect waves-light btn">Add user</a> -->
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Full name</th>
+      <th>Login</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody-user
+    *ngFor="let i of (users$ | async)"
+    [user] = "i"
+  >
+  </tbody-user>
+  <tfoot>
+    <tr *ngIf="(users$ | async)?.length === 0">
+      <td colspan="3" class="noUsers">The user list is empty</td>
+    </tr>
+  </tfoot>
+</table>

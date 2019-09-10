@@ -1,3 +1,4 @@
 {
-  "companiesPath" : "./data/companies.json"
+  "companiesPath" : "./data/companies.json",
+  "usersPath" : "./data/users.json"
 }
