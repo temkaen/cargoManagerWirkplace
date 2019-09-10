@@ -1,5 +1,12 @@
 <h2 class="container-company__title">Companies</h2>
-<button (click)="$event.preventDefault()" routerLink="/companies/add" class="waves-effect waves-light btn">Add</button>
+<div>
+  <button (click)="$event.preventDefault()" routerLink="/companies/add" class="waves-effect waves-light btn">Add</button>
+    <form *ngIf="(companies$ | async)?.length > 5" [formGroup]="itemsPagination" >
+      <select class="custom-select" (change)="changeItemsPerPage()" (load)="setPaginationParams()" formControlName="itemsSelect" >
+        <option *ngFor="let item of itemsNum" [ngValue]="item">{{item}}</option>
+      </select>
+    </form>
+</div>
 <table class="table">
   <thead class="thead-inverse">
   <tr>
@@ -11,15 +18,16 @@
     <th>Status</th>
   </tr>
   </thead>
-      <tbody-company
-        *ngFor="let u of (companies$ | async)"
+      <tbody
+        *ngFor="let u of (companies$ | async) | paginate: {itemsPerPage:items, currentPage:p}"
         [company] = "u"
       >
-      </tbody-company>
+      </tbody>
   <tr *ngIf="(companies$ | async)?.length === 0">
     <td colspan="6" class="noCompanies">No companies</td>
   </tr>
 </table>
+<pagination-controls *ngIf="(companies$ | async)?.length > 5" (pageChange)="pageChanged($event)" class="pagination-custom"></pagination-controls>
 
 
 

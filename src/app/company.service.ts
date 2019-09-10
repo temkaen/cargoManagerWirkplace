@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from "@angular/core";
-import {map, catchError} from "rxjs/operators/";
-import {Observable, empty} from "rxjs";
-import {Company} from "./table-company/company";
-import {ErrorService} from "./error.service";
+import {Injectable} from '@angular/core';
+import {map, catchError} from 'rxjs/operators/';
+import {Observable, empty} from 'rxjs';
+import {Company} from './table-company/company';
+import {ErrorService} from './error.service';
 
 
 @Injectable()
@@ -19,7 +19,9 @@ export class CompanyService {
             } else {
               return [
                 ...data.map(company => {
+
                   return {
+
                     id: company.id,
                     name: company.name || '',
                     address: company.address || '',
