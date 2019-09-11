@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
-import { map, catchError } from "rxjs/operators/";
-import { Observable, empty } from "rxjs";
-import { User } from "./table-user/user";
-import { ErrorService } from "./error.service";
+import { Injectable } from '@angular/core';
+import { map, catchError } from 'rxjs/operators/';
+import { Observable, empty } from 'rxjs';
+import { User } from './table-user/user';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class UserService {

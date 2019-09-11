@@ -18,6 +18,10 @@ class CompaniesService {
     return this.companiesRepository.addCompany(dataCompany);
   }
 
+  async changeCompanyStatus(idCompany) {
+    return this.companiesRepository.putCompanyStatus(idCompany);
+  }
+
   async editCompany(id, dataCompany) {
     const companies = await this.getCompanies();
 

@@ -56,6 +56,13 @@ class CompaniesRepository {
 
     return companies;
   }
+  async putCompanyStatus(id) {
+    const companies = await this.getCompanies();
+    const company = companies.find(company => company.id === id);
+    company.status = (company.status === status.inactive) ? status.active : status.inactive;
+    await writeFilePromise(this.companiesPath, JSON.stringify(companies));
+
+  }
 }
 
 module.exports = new CompaniesRepository();

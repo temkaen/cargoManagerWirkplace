@@ -12,11 +12,14 @@ import {ErrorService} from './error.service';
 import { FormCompanyComponent } from './form-company/form-company.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {ModalComponent} from './modal/modal.component';
 
 const  routes = [
   { path: '', redirectTo: '/companies', pathMatch: 'full' }, /// this route redirected to default page and must be remove later
   {path: 'companies', component:   TableCompanyComponent},
   {path: 'companies/add', component: FormCompanyComponent},
+  {path: 'companies/edit/:id', component: FormCompanyComponent}
+
 ];
 
 @NgModule({
@@ -25,6 +28,7 @@ const  routes = [
     TableCompanyComponent,
     ItemCompanyComponent,
     FormCompanyComponent,
+    ModalComponent
 
   ],
   imports: [

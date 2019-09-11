@@ -1,58 +1,87 @@
 <h2 class="container-company__title">Companies</h2>
 <div class="row">
-    <form [formGroup]="formCompany" >
-        <div class="form-group" >
-            <label for="nameCompany">Name Company</label>
-            <input type="text" class="form-control" id="nameCompany" placeholder="Name Company" name="name" formControlName="name">
-        </div>
-      <div class="error" *ngIf="formCompany.controls['name'].invalid && formCompany.controls['name'].touched">
-        Enter company name
-      </div>
-        <div class="form-group">
-            <label for="addressCompany">Address Company</label>
-            <input type="text" class="form-control" id="addressCompany" placeholder="Address Company" name="address" formControlName="address" >
-        </div>
-      <div class="error" *ngIf="formCompany.controls['address'].invalid && formCompany.controls['address'].touched">
-        Enter company address
-      </div>
-        <div class="form-group">
-            <label for="contactPerson">Contact Person</label>
-            <input type="text" class="form-control" id="contactPerson"  placeholder="Contact Person" name="contact" formControlName="contactPerson">
-        </div>
-      <div class="error"
-           *ngIf="formCompany.controls['contactPerson'].invalid && formCompany.controls['contactPerson'].touched">
-        Enter your contactPerson
-      </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email"  placeholder="Email" name = "email" formControlName="email">
-        </div>
-      <div class="error"
-           *ngIf="(formCompany.controls['email'].invalid && formCompany.controls['email'].touched )   ">
-        Enter your email
-      </div>
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="email" class="form-control" id="phone"  placeholder="Phone" name = "phone" formControlName="phone">
-        </div>
-      <div class="error"
-           *ngIf="formCompany.controls['phone'].invalid && formCompany.controls['phone'].touched">
-        Enter your phone
-      </div>
-      <div class="form-group">
-        <button (click) = "addCompany() || formCompany.reset()" [disabled] =
-                '!formCompany.valid'
-                class="waves-effect waves-light btn"  >Add Company</button>
-      </div>
-        <div *ngIf="success" class="form-success">
-            <p>Form Submitted Successfully</p>
-             <button (click)="$event.preventDefault()" routerLink="/companies" class="waves-effect waves-light btn">companies list</button>
-        </div>
-      <div *ngIf="repeatCompany" class="form-success red-text">
-        <p>Such a company exists</p>
-      </div>
-    </form>
+  <form [formGroup]="formCompany" >
+    <div class="form-group" >
+      <label for="nameCompany">Name Company</label>
+      <input type="text" class="form-control" id="nameCompany" placeholder="Name Company" name="name" formControlName="name">
+    </div>
+    <div class="error" *ngIf="formCompany.controls['name'].invalid && formCompany.controls['name'].touched">
+      Enter company name
+    </div>
+    <div class="form-group">
+      <label for="addressCompany">Address Company</label>
+      <input type="text" class="form-control" id="addressCompany" placeholder="Address Company" name="address" formControlName="address" >
+    </div>
+    <div class="error" *ngIf="formCompany.controls['address'].invalid && formCompany.controls['address'].touched">
+      Enter company address
+    </div>
+    <div class="form-group">
+      <label for="contactPerson">Contact Person</label>
+      <input type="text" class="form-control" id="contactPerson"  placeholder="Contact Person" name="contact" formControlName="contactPerson">
+    </div>
+    <div class="error"
+         *ngIf="formCompany.controls['contactPerson'].invalid && formCompany.controls['contactPerson'].touched">
+      Enter your contactPerson
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email"  placeholder="Email" name = "email" formControlName="email">
+    </div>
+    <div class="error"
+         *ngIf="(formCompany.controls['email'].invalid && formCompany.controls['email'].touched )   ">
+      Enter your email
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="email" class="form-control" id="phone"  placeholder="Phone" name = "phone" formControlName="phone">
+    </div>
+    <div class="error"
+         *ngIf="formCompany.controls['phone'].invalid && formCompany.controls['phone'].touched">
+      Enter your phone
+    </div>
+    <div class="form-group">
+      <button *ngIf="add" (click) = "addCompany('custom-modal-1','custom-modal-2')" [disabled] =
+        '!formCompany.valid'
+              class="waves-effect waves-light btn">Add Company</button>
+    </div>
+    <div class="form-group">
+      <button *ngIf="edit" (click)= "editCompany('custom-modal-3','custom-modal-2')" [disabled]=' !formCompany.dirty || !formCompany.valid' class="waves-effect waves-light btn">Edit Company</button>
+    </div>
+    <div *ngIf="success" class="form-success">
+      <button (click)="$event.preventDefault()" routerLink="/companies" class="waves-effect waves-light btn">companies list</button>
+    </div>
+    <div *ngIf="repeatCompany" class="form-success red-text">
+      <p>Such a company exists</p>
+    </div>
+  </form>
 </div>
+<jw-modal id="custom-modal-1">
+  <span (click)="closeModal('custom-modal-1')" class="modal-close">
+      <i class="material-icons">close</i>
+  </span>
+  <h1 class="title-modal">Form Added Successfully</h1>
+  <div class="container-button">
+    <a routerLink= "/companies" (click) = "closeModal('custom-modal-1')">Close</a>
+  </div>
+</jw-modal>
+<jw-modal id="custom-modal-2">
+  <span (click)="closeModal('custom-modal-2')" class="modal-close">
+      <i class="material-icons">close</i>
+  </span>
+  <h1 class="title-modal error-modal">{{messageError}}</h1>
+  <div class="container-button">
+    <a (click)="closeModal('custom-modal-2')">Close</a>
+  </div>
+</jw-modal>
+<jw-modal id="custom-modal-3">
+  <span (click)="closeModal('custom-modal-3')" class="modal-close">
+      <i class="material-icons">close</i>
+  </span>
+  <h1 class="title-modal">Form Edited Successfully</h1>
+  <div class="container-button">
+    <a routerLink= "/companies" (click) = "closeModal('custom-modal-3')">Close</a>
+  </div>
+</jw-modal>
 
 
 
